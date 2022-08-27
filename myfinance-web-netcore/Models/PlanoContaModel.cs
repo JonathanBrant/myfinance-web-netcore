@@ -42,6 +42,7 @@ namespace myfinance_web_netcore.Models
             lista.Add(planoConta);
         }
 
+        objDAL.Desconectar();
         return lista;
        }
     }
