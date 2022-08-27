@@ -9,6 +9,7 @@ using myfinance_web_netcore.Models;
 
 namespace myfinance_web_netcore.Controllers
 {
+    //[Route("[controller]")]
     public class PlanoContaController : Controller
     {
         private readonly ILogger<PlanoContaController> _logger;
@@ -20,23 +21,41 @@ namespace myfinance_web_netcore.Controllers
 
         public IActionResult Index()
         {
-            var planoContasModel = new PlanoContaModel();
-            ViewBag.Lista = planoContasModel.ListaPlanoContas();
+            var planoContaModel = new PlanoContaModel();
+            ViewBag.Lista = planoContaModel.ListaPlanoContas();
             return View();
         }
 
         [HttpGet]
-        public IActionResult CriarPlanoConta() 
+        public IActionResult CriarPlanoConta(int? id)
         {
+            if (id !=null)
+            {
+                var plano_conta = new PlanoContaModel().CarregarPlanoContaPorId(id);
+                ViewBag.PlanoConta = plano_conta;
+            }
+
             return View();
         }
 
-          [HttpPost]
+        [HttpPost]
         public IActionResult CriarPlanoConta(PlanoContaModel formulario)
         {
-            formulario.Inserir();
+            if (formulario.Id == null)
+                formulario.Inserir();
+            else
+                formulario.Atualizar(formulario.Id);
+
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult ExcluirPlanoConta(int id)
+        {
+            new PlanoContaModel().Excluir(id);
+            return RedirectToAction("Index");
+        }
+
 
 
     }

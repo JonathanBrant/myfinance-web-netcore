@@ -1,0 +1,95 @@
+@using System.Globalization
+@model TransacaoModel;
+
+@{
+    ViewData["Title"] = "Registro de Transação Financeira";
+}
+
+@{
+    var vData = "";
+    var vDescricao = "";
+    var vTipo = "";
+    var vValor = "";
+    var vId = 0;
+    var vPlanoContaId = 0;
+    var vPagamento = 0;
+
+    try
+    {
+    vId = int.Parse(@ViewBag.Registro.Id.ToString());
+    vData = DateTime.Parse(@ViewBag.Registro.Data.ToString()).ToString("yyyy-MM-dd");
+    vPlanoContaId = int.Parse(@ViewBag.Registro.IdPlanoConta.ToString());
+    vDescricao = @ViewBag.Registro.Descricao.ToString();
+    vTipo = @ViewBag.Registro.Tipo.ToString();
+   // vPagamento = int.Parse(@ViewBag.Registro.Pagamento.ToString());
+
+    CultureInfo invC = CultureInfo.InvariantCulture;
+    string value;
+    value = @ViewBag.Registro.Valor.ToString(invC);
+    vValor = value;
+
+    }
+    catch{}
+
+}
+
+<form asp-controller="Transacao" asp-action="CriarTransacao">
+    <input type="hidden" asp-for="Id"><br>
+
+    <label for="fname">Descrição:</label><br>
+    <div>
+        <label>Data:</label>
+        <input type="date" class="form-control" asp-for="Data" value="@vData">
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Tpo:</label>
+        <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
+    </div>
+
+    <div>
+        <label>Valor:</label>
+        <input type="text" class="form-control" asp-for="Valor" step="0.01" value="@vValor">
+        <span asp-validation-for="Valor" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Histórico:</label>
+        @Html.TextArea("Historico", vDescricao, new {@class = "form-control"})
+        <span asp-validation-for="Historico" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Plano de Conta</label>
+        <select asp-for="IdPlanoConta" class="form-control">
+            @{
+                foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
+                {
+                    if (item.Id.ToString() == vPlanoContaId.ToString())
+                    {
+                        <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                    }
+                }
+            }
+        </select>
+    </div>
+
+    @* <div>
+        <label>Tipo de Pagamento</label>
+        <select class="form-control" asp-for="@vPagamento">
+            <option value="1">Dinheiro</option>
+            <option value="2">Débito</option>
+            <option value="3">Crédito</option>
+            <option value="4">Pix</option>
+            <option value="5">Boleto</option>
+        </select>
+    </div> *@
+    <hr>
+    <button type="submit" class="btn btn-block btn-success">Registrar</button>
+
+</form>
