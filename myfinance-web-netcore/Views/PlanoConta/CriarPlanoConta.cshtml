@@ -1,0 +1,19 @@
+@model PlanoContaModel
+
+@{
+    ViewData["Title"] = "Plano Contas";
+}
+
+<h1> @ViewData["Title"]</h1>
+
+<form asp-controller="PlanoConta" asp-action="CriarPlanoConta">
+    <input type ="hidden" asp-for ="Id"><br>
+
+    <label for="fname">Descrição:</label><br>
+    <input type ="text" asp-for ="Descricao"><br>
+
+    <label for="fname">Tipo:</label><br>
+    <input type ="text" asp-for ="Tipo"><br>
+
+    <button type="submit" class="btn btn-block btn-success" style="margin-top: 10px"> Registrar</button>
+</form>

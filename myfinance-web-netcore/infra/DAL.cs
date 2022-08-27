@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 
@@ -45,12 +41,31 @@ namespace myfinance_web_netcore.Infra
                 conn = new();
                 conn.ConnectionString = connectionString;
                 conn.Open();
-                Console.WriteLine("Banco conectado");
+                Console.WriteLine("Conexão comm BD realizada com sucesso");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("falha na abertura do banco de dados = " + ex.ToString());
+                Console.WriteLine("Erro na conexão com o BD: " + ex.ToString());
             }
         }
+
+        public void Desconectar() {
+            conn.Close();
+        }
+
+        public DataTable RetornarDataTable(string sql) 
+        {
+            var dataTable = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+            da.Fill(dataTable);
+            return dataTable;
+        }
+
+        public void ExecutarComandoSQL(string sql) 
+        {
+            SqlCommand comando = new SqlCommand(sql, conn);
+            comando.ExecuteNonQuery();
+        }
+
     }
 }
