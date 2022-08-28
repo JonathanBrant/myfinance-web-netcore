@@ -27,8 +27,13 @@ namespace myfinance_web_netcore.Controllers
         }
 
         [HttpGet]
-           public IActionResult CriarTransacao() 
+           public IActionResult CriarTransacao(int? id) 
         {
+            if(id != null) 
+            {
+                var transacao = new Transacao().CarregarTransacaoPorId(id);
+                ViewBag.Registro = transacao;
+            }
             ViewBag.ListaPlanoContas = new PlanoContaModel().ListaPlanoContas();
             return View();
         }
@@ -37,7 +42,14 @@ namespace myfinance_web_netcore.Controllers
         public IActionResult CriarTransacao(TransacaoModel formulario)
         {   
             var transacao = new Transacao();
-            transacao.Inserir(formulario);
+            if(formulario.Id == null)
+            {            
+                transacao.Inserir(formulario);
+            }
+            else
+            {
+                transacao.Atualizar(formulario);
+            }
             return RedirectToAction("Index");
         }
 
@@ -46,6 +58,14 @@ namespace myfinance_web_netcore.Controllers
         public IActionResult Error()
         {
             return View("Error!");
+        }
+
+        
+        [HttpGet]
+        public IActionResult DeletarTransacao(int id)
+        {
+            new Transacao().Deletar(id);
+            return RedirectToAction("Index");
         }
     }
 }

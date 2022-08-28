@@ -40,7 +40,7 @@
                 </td>
                 <td>
                     <button type='button' class='btn btn-block btn-danger'
-                    onclick="ExcluirTransacao(@item.Id.ToString())">Excluir</button>
+                    onclick="DeletarTransacao(@item.Id.ToString())">Excluir</button>
                 </td>
             </tr>
         }
@@ -54,14 +54,14 @@
         window.location.href = "../Transacao/CriarTransacao";    
     }
 
-    function EditarPlanoConta(id)
+    function EditarTransacao(id)
     {
         window.location.href = "../Transacao/CriarTransacao/"+id;    
     }
 
-    function ExcluirPlanoConta(id)
+    function DeletarTransacao(id)
     {
-        window.location.href = "../Transacao/ExcluirTransacao/"+id;    
+        window.location.href = "../Transacao/DeletarTransacao/"+id;    
     }
 
 </script>

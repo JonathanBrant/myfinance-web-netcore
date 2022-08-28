@@ -19,7 +19,7 @@
     vId = int.Parse(@ViewBag.Registro.Id.ToString());
     vData = DateTime.Parse(@ViewBag.Registro.Data.ToString()).ToString("yyyy-MM-dd");
     vPlanoContaId = int.Parse(@ViewBag.Registro.IdPlanoConta.ToString());
-    vDescricao = @ViewBag.Registro.Descricao.ToString();
+    vDescricao = @ViewBag.Registro.Historico.ToString();
     vTipo = @ViewBag.Registro.Tipo.ToString();
    // vPagamento = int.Parse(@ViewBag.Registro.Pagamento.ToString());
 
@@ -79,7 +79,7 @@
         </select>
     </div>
 
-    @* <div>
+    <div>
         <label>Tipo de Pagamento</label>
         <select class="form-control" asp-for="@vPagamento">
             <option value="1">Dinheiro</option>
@@ -88,7 +88,7 @@
             <option value="4">Pix</option>
             <option value="5">Boleto</option>
         </select>
-    </div> *@
+    </div>
     <hr>
     <button type="submit" class="btn btn-block btn-success">Registrar</button>
 
