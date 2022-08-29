@@ -20,12 +20,13 @@ namespace myfinance_web_netcore.Domain
             objDAL.Desconectar();
         }
 
-            public void Atualizar (TransacaoModel formulario)
+            public void Atualizar (TransacaoModel formulario)            
         {
+            var valor = decimal.Parse(formulario.Valor.ToString())/100;
             var objDAL  = DAL.GetInstancia;
             objDAL.Conectar();
             var sql = $"UPDATE TRANSACAO SET DATA = '{formulario.Data.ToString("yyyyMMdd")}'," +
-                $"VALOR = {formulario.Valor}, TIPO = '{formulario.Tipo}', HISTORICO = '{formulario.Historico}', " +
+                $"VALOR = {valor}, TIPO = '{formulario.Tipo}', HISTORICO = '{formulario.Historico}', " +
                 $"ID_PLANO_CONTA = {formulario.IdPlanoConta}, " +
                 $"ID_PAGAMENTO = {formulario.IdPagamento} WHERE ID = {formulario.Id}";
 
@@ -73,7 +74,7 @@ namespace myfinance_web_netcore.Domain
                     IdPagamento = int.Parse(dataTable.Rows[0]["ID_PAGAMENTO"].ToString())                           
                 };
 
-                 Console.WriteLine("Comando SQL: " + sql.ToString() +  " " + transacao.Valor);
+                 Console.WriteLine("Comando SQL: " + sql.ToString() +  " " + transacao.Valor +  " " + transacao.Tipo +  " " + transacao.Historico +  " " + transacao.IdPlanoConta +  " " + transacao.IdPagamento);
 
             objDAL.Desconectar();
             return transacao;

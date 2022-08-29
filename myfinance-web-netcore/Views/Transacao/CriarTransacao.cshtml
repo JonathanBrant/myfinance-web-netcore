@@ -25,11 +25,11 @@
         vTipo = @ViewBag.Registro.Tipo.ToString();
         vPagamento = int.Parse(@ViewBag.Registro.IdPagamento.ToString());
 
-
         CultureInfo invC = CultureInfo.InvariantCulture;
         string value;
         value = @ViewBag.Registro.Valor.ToString(invC);
         vValor = value;
+       
     }
     catch { }
 }
@@ -69,7 +69,7 @@
                 </label>
                 <br />
                     }
-                    else if (@vTipo == "")
+                    else
                     {
                 <label>
                     <input id="input-receita" class="input" type="radio" name="tipo" asp-for="Tipo" value="R">Receita
@@ -84,7 +84,7 @@
                 }
         <div>
             <label>Valor:</label>
-            <input type="text" class="form-control" asp-for="Valor" value="@vValor">
+            <input type="number" class="form-control" asp-for="Valor" value="@vValor" step="0.01">
             <span asp-validation-for="Valor" class="text-danger"></span>
         </div>
 
@@ -119,9 +119,9 @@
                         @{
                             foreach (var item in (List<PagamentoModel>)ViewBag.ListaPagamento)
                             {
-                                if (item.Id != 6)
+                                if (item.Id < 6)
                                 {
-                                    if (item.Id.ToString() == vPlanoContaId.ToString())
+                                    if (item.Id.ToString() == vPagamento.ToString())
                                     {
                                 <option selected value="@item.Id.ToString()" id="option">@item.Pagamento.ToString()</option>
                                     }
@@ -131,7 +131,6 @@
                                     }
                                 }
                             }
-
                         }
             </select>
         </div>
@@ -156,7 +155,6 @@
     window.onload = function () {
         if (inputeDespesa.checked) {
             pagamento.style.display = ""
-        }
-    }
-
+        }        
+    } 
 </script>
