@@ -26,7 +26,10 @@ namespace myfinance_web_netcore.Domain
             objDAL.Conectar();
             var sql = $"UPDATE TRANSACAO SET DATA = '{formulario.Data.ToString("yyyyMMdd")}'," +
                 $"VALOR = {formulario.Valor}, TIPO = '{formulario.Tipo}', HISTORICO = '{formulario.Historico}', " +
-                $"ID_PLANO_CONTA = {formulario.IdPlanoConta} WHERE ID = {formulario.Id}";
+                $"ID_PLANO_CONTA = {formulario.IdPlanoConta}, " +
+                $"ID_PAGAMENTO = {formulario.IdPagamento} WHERE ID = {formulario.Id}";
+
+                Console.WriteLine("Comando SQL: " + sql.ToString());
 
             objDAL.ExecutarComandoSQL(sql);
             objDAL.Desconectar();
@@ -36,14 +39,14 @@ namespace myfinance_web_netcore.Domain
             var objDAL = DAL.GetInstancia;
             objDAL.Conectar();
 
-            var sql = "INSERT INTO TRANSACAO(data, valor, tipo, historico, id_plano_conta) " +
+            var sql = "INSERT INTO TRANSACAO(data, valor, tipo, historico, id_plano_conta, id_pagamento) " +
             "VALUES(" +
             $"'{formulario.Data.ToString("yyyyMMdd")}',"+
             $"{formulario.Valor},"+
             $"'{formulario.Tipo}',"+            
             $"'{formulario.Historico}',"+
-            $"{formulario.IdPlanoConta})";
-            //$"{formulario.Pagamento}";
+            $"{formulario.IdPlanoConta},"+
+            $"{formulario.IdPagamento})";
 
             Console.WriteLine("Comando SQL: " + sql.ToString());
 
@@ -56,7 +59,7 @@ namespace myfinance_web_netcore.Domain
             var objDAL  = DAL.GetInstancia;
             objDAL.Conectar();
 
-            var sql = $"SELECT ID, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO where id = {id}";
+            var sql = $"SELECT ID, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA, ID_PAGAMENTO FROM TRANSACAO where id = {id}";
             var dataTable = objDAL.RetornarDataTable(sql);
 
                 
@@ -66,8 +69,11 @@ namespace myfinance_web_netcore.Domain
                     Tipo = dataTable.Rows[0]["TIPO"].ToString(),
                     Data = DateTime.Parse(dataTable.Rows[0]["DATA"].ToString()),
                     Valor = decimal.Parse(dataTable.Rows[0]["VALOR"].ToString()),  
-                    IdPlanoConta = int.Parse(dataTable.Rows[0]["ID_PLANO_CONTA"].ToString()),                                 
+                    IdPlanoConta = int.Parse(dataTable.Rows[0]["ID_PLANO_CONTA"].ToString()), 
+                    IdPagamento = int.Parse(dataTable.Rows[0]["ID_PAGAMENTO"].ToString())                           
                 };
+
+                 Console.WriteLine("Comando SQL: " + sql.ToString() +  " " + transacao.Valor);
 
             objDAL.Desconectar();
             return transacao;
@@ -79,7 +85,7 @@ namespace myfinance_web_netcore.Domain
             var objDAL = DAL.GetInstancia;
             objDAL.Conectar();
 
-            var sql = "SELECT ID, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA FROM TRANSACAO";
+            var sql = "SELECT ID, DATA, VALOR,TIPO, HISTORICO, ID_PLANO_CONTA, ID_PAGAMENTO FROM TRANSACAO";
             var dataTable = objDAL.RetornarDataTable(sql);
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
@@ -93,7 +99,7 @@ namespace myfinance_web_netcore.Domain
                     Tipo = dataTable.Rows[i]["TIPO"].ToString(),
                     Historico = dataTable.Rows[i]["HISTORICO"].ToString(),
                     IdPlanoConta = int.Parse(dataTable.Rows[i]["ID_PLANO_CONTA"].ToString()),
-                    //Pagamento = int.Parse(dataTable.Rows[i]["PAGAMENTO"].ToString())
+                    IdPagamento = int.Parse(dataTable.Rows[i]["ID_PAGAMENTO"].ToString())
                 };
 
                 lista.Add(transacao);

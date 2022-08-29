@@ -6,7 +6,7 @@
 }
 
 @{
-    var vData = "";
+    var vData = DateTime.Now.ToString("yyyy-MM-dd");
     var vDescricao = "";
     var vTipo = "";
     var vValor = "";
@@ -14,29 +14,30 @@
     var vPlanoContaId = 0;
     var vPagamento = 0;
 
+
+
     try
     {
-    vId = int.Parse(@ViewBag.Registro.Id.ToString());
-    vData = DateTime.Parse(@ViewBag.Registro.Data.ToString()).ToString("yyyy-MM-dd");
-    vPlanoContaId = int.Parse(@ViewBag.Registro.IdPlanoConta.ToString());
-    vDescricao = @ViewBag.Registro.Historico.ToString();
-    vTipo = @ViewBag.Registro.Tipo.ToString();
-   // vPagamento = int.Parse(@ViewBag.Registro.Pagamento.ToString());
+        vId = int.Parse(@ViewBag.Registro.Id.ToString());
+        vData = DateTime.Parse(@ViewBag.Registro.Data.ToString()).ToString("yyyy-MM-dd");
+        vPlanoContaId = int.Parse(@ViewBag.Registro.IdPlanoConta.ToString());
+        vDescricao = @ViewBag.Registro.Historico.ToString();
+        vTipo = @ViewBag.Registro.Tipo.ToString();
+        vPagamento = int.Parse(@ViewBag.Registro.IdPagamento.ToString());
 
-    CultureInfo invC = CultureInfo.InvariantCulture;
-    string value;
-    value = @ViewBag.Registro.Valor.ToString(invC);
-    vValor = value;
 
+        CultureInfo invC = CultureInfo.InvariantCulture;
+        string value;
+        value = @ViewBag.Registro.Valor.ToString(invC);
+        vValor = value;
     }
-    catch{}
-
+    catch { }
 }
 
-<form asp-controller="Transacao" asp-action="CriarTransacao">
+<form asp-controller="Transacao" asp-action="CriarTransacao" id="form">
     <input type="hidden" asp-for="Id"><br>
 
-    <label for="fname">Descrição:</label><br>
+    <h1 id="h1"> @ViewData["Title"]</h1>
     <div>
         <label>Data:</label>
         <input type="date" class="form-control" asp-for="Data" value="@vData">
@@ -44,52 +45,118 @@
     </div>
 
     <div>
-        <label>Tpo:</label>
-        <input type="text" class="form-control" asp-for="Tipo" value="@vTipo">
-    </div>
-
-    <div>
-        <label>Valor:</label>
-        <input type="text" class="form-control" asp-for="Valor" step="0.01" value="@vValor">
-        <span asp-validation-for="Valor" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label>Histórico:</label>
-        @Html.TextArea("Historico", vDescricao, new {@class = "form-control"})
-        <span asp-validation-for="Historico" class="text-danger"></span>
-    </div>
-
-    <div>
-        <label>Plano de Conta</label>
-        <select asp-for="IdPlanoConta" class="form-control">
-            @{
-                foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
-                {
-                    if (item.Id.ToString() == vPlanoContaId.ToString())
+        <label>Tipo:</label><br>
+                @{
+                    if (@vTipo == "R")
                     {
-                        <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                <label>
+                    <input id="input-receita" class="input" type="radio" name="tipo" asp-for="Tipo" value="R" checked>Receita
+                </label>
+                <br />
+                <label>
+                    <input id="input-despesa" class="input" type="radio" name="tipo" asp-for="Tipo" value="D">Despesa
+                </label>
+                <br />
                     }
-                    else
+                    else if (@vTipo == "D")
                     {
-                        <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                <label>
+                    <input id="input-receita" class="input" type="radio" name="tipo" asp-for="Tipo" value="R">Receita
+                </label>
+                <br />
+                <label>
+                    <input id="input-despesa" class="input" type="radio" name="tipo" asp-for="Tipo" value="D" checked>Despesa
+                </label>
+                <br />
                     }
+                    else if (@vTipo == "")
+                    {
+                <label>
+                    <input id="input-receita" class="input" type="radio" name="tipo" asp-for="Tipo" value="R">Receita
+                </label>
+                <br />
+                <label>
+                    <input id="input-despesa" class="input" type="radio" name="tipo" asp-for="Tipo" value="D">Despesa
+                </label>
+                <br />
+                    }
+
                 }
-            }
-        </select>
-    </div>
+        <div>
+            <label>Valor:</label>
+            <input type="text" class="form-control" asp-for="Valor" value="@vValor">
+            <span asp-validation-for="Valor" class="text-danger"></span>
+        </div>
 
-    <div>
-        <label>Tipo de Pagamento</label>
-        <select class="form-control" asp-for="@vPagamento">
-            <option value="1">Dinheiro</option>
-            <option value="2">Débito</option>
-            <option value="3">Crédito</option>
-            <option value="4">Pix</option>
-            <option value="5">Boleto</option>
-        </select>
-    </div>
-    <hr>
-    <button type="submit" class="btn btn-block btn-success">Registrar</button>
+        <div>
+            <label>Histórico:</label>
+                    @Html.TextArea("Historico", vDescricao, new {@class = "form-control"})
+            <span asp-validation-for="Historico" class="text-danger"></span>
+        </div>
 
+        <div>
+            <label>Plano de Conta</label>
+            <select asp-for="IdPlanoConta" class="form-control">
+                        @{
+                            foreach (var item in (List<PlanoContaModel>)ViewBag.ListaPlanoContas)
+                            {
+                                if (item.Id.ToString() == vPlanoContaId.ToString())
+                                {
+                            <option selected value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                                }
+                                else
+                                {
+                            <option value="@item.Id.ToString()">@item.Descricao.ToString()</option>
+                                }
+                            }
+                        }
+            </select>
+        </div>
+
+        <div id="pagamento" style="display: none;">
+            <label>Tipo de Pagamento:</label>
+            <select asp-for="IdPagamento" class="form-control">
+                        @{
+                            foreach (var item in (List<PagamentoModel>)ViewBag.ListaPagamento)
+                            {
+                                if (item.Id != 6)
+                                {
+                                    if (item.Id.ToString() == vPlanoContaId.ToString())
+                                    {
+                                <option selected value="@item.Id.ToString()" id="option">@item.Pagamento.ToString()</option>
+                                    }
+                                    else
+                                    {
+                                <option value="@item.Id.ToString()" id="option">@item.Pagamento.ToString()</option>
+                                    }
+                                }
+                            }
+
+                        }
+            </select>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-block btn-success">Registrar</button>
 </form>
+
+<script>
+    const pagamento = document.querySelector("#pagamento")
+    const input = document.querySelector(".input")
+    const inputReceita = document.querySelector('#input-receita');
+    const inputeDespesa = document.querySelector('#input-despesa');
+    const option = document.querySelector('#option');
+    inputReceita.addEventListener("click", () => {
+        pagamento.style.display = "none"
+        option.setAttribute('value', "6");
+    });
+    inputeDespesa.addEventListener("click", () => {
+        pagamento.style.display = ""
+    });
+
+    window.onload = function () {
+        if (inputeDespesa.checked) {
+            pagamento.style.display = ""
+        }
+    }
+
+</script>

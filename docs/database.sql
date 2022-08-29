@@ -8,6 +8,12 @@ create table plano_contas(
 	primary key(id)
 );
 
+create table pagamento(
+	id int identity(1,1) not null,
+	pagamento varchar(50) not null,
+	primary key(id)
+);
+
 create table transacao(
 	id bigint identity(1,1) not null,
 	data datetime not null,
@@ -15,8 +21,10 @@ create table transacao(
 	tipo char(1) not null,
 	historico text null,
 	id_plano_conta int not null,
+	id_pagamento int,
 	primary key(id),
 	foreign key(id_plano_conta) references plano_contas
+	foreign key(id_pagamento) references pagamento
 );
 
 select * from plano_contas;

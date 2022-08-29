@@ -9,7 +9,6 @@ using myfinance_web_netcore.Models;
 
 namespace myfinance_web_netcore.Controllers
 {
-    //[Route("[controller]")]
     public class PlanoContaController : Controller
     {
         private readonly ILogger<PlanoContaController> _logger;

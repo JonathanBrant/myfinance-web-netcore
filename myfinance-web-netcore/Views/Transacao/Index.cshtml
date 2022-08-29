@@ -17,7 +17,7 @@
         <th>Valor</th>
         <th>Histórico</th>
         <th>Plano de Conta</th>
-        @* <th>Tipo de Pagamento</th> *@
+        <th>Tipo de Pagamento</th>
         <th>#</th>
         <th>#</th>
     </tr>
@@ -25,16 +25,16 @@
     @{
         foreach (var item in (List<TransacaoModel>)ViewBag.Lista)
         {
-            <tr>
-
+            if(@item.IdPagamento != 6) {
+            <tr>                 
                 <td>@item.Id</td>
                 <td>@item.Data.ToString("dd/MM/yyyy")</td>
                 <td>@item.Tipo</td>
                 <td>@item.Valor</td>
                 <td>@item.Historico</td>
                 <td>@item.IdPlanoConta</td>
-                @* <td>@item.Pagamento</td> *@
-                <td>
+                <td>@item.IdPagamento</td>
+                <td>            
                     <button type='button' class='btn btn-block btn-warning'
                     onclick="EditarTransacao(@item.Id.ToString())">Editar</button>
                 </td>
@@ -43,9 +43,27 @@
                     onclick="DeletarTransacao(@item.Id.ToString())">Excluir</button>
                 </td>
             </tr>
+            } else {
+                  <tr>                 
+                <td>@item.Id</td>
+                <td>@item.Data.ToString("dd/MM/yyyy")</td>
+                <td>@item.Tipo</td>
+                <td>@item.Valor</td>
+                <td>@item.Historico</td>
+                <td>@item.IdPlanoConta</td>
+                <td></td>
+                <td>            
+                    <button type='button' class='btn btn-block btn-warning'
+                    onclick="EditarTransacao(@item.Id.ToString())">Editar</button>
+                </td>
+                <td>
+                    <button type='button' class='btn btn-block btn-danger'
+                    onclick="DeletarTransacao(@item.Id.ToString())">Excluir</button>
+                </td>
+            </tr>
+            }
         }
     }
-
 </table>
 
 <script>

@@ -14,6 +14,7 @@ namespace myfinance_web_netcore.Models
         
         public int IdPlanoConta { get; set; }
 
-        //public int? Pagamento {get; set; }
+        public int? IdPagamento { get; set; }
+
     }
 }

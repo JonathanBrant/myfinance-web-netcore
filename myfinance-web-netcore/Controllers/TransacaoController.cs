@@ -35,6 +35,7 @@ namespace myfinance_web_netcore.Controllers
                 ViewBag.Registro = transacao;
             }
             ViewBag.ListaPlanoContas = new PlanoContaModel().ListaPlanoContas();
+            ViewBag.ListaPagamento = new PagamentoModel().ListaPagamento();
             return View();
         }
 
