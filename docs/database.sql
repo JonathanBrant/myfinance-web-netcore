@@ -27,41 +27,23 @@ create table transacao(
 	foreign key(id_pagamento) references pagamento
 );
 
-select * from plano_contas;
-
-insert into plano_contas(descricao, tipo) values('Aluguel','C');
+insert into plano_contas(descricao, tipo) values('Salário','R');
+insert into plano_contas(descricao, tipo) values('Aluguel','D');
 insert into plano_contas(descricao, tipo) values('Alimentação','D');
 insert into plano_contas(descricao, tipo) values('Combustivel','D');
 insert into plano_contas(descricao, tipo) values('Viagens','D');
-insert into plano_contas(descricao, tipo) values('Salário','C');
+insert into plano_contas(descricao, tipo) values('Luz','D');
+insert into plano_contas(descricao, tipo) values('Água','D');
+insert into plano_contas(descricao, tipo) values('Internet','D');
 
-delete from plano_contas where id = 4;
-update plano_contas set tipo = 'D' where id = 1;
-
-select * from transacao;
-
-insert into transacao(data, valor, tipo, historico,id_plano_conta)
-values('2022-08-11 21:35:00', 100.47, 'D', 'Gasolina para Viagem', 3);
-
-insert into transacao(data, valor, tipo, historico,id_plano_conta)
-values(GETDATE(), 48.42, 'D', 'Almoço', 2);
-
-insert into transacao(data, valor, tipo, historico,id_plano_conta)
-values(GETDATE()-1, 35.87, 'D', 'Almoço', 2);
-
-insert into transacao(data, valor, tipo, historico,id_plano_conta)
-values(GETDATE()-10, 3000000, 'D', 'Salario Empresa X', 6);
-update transacao set tipo = 'C' where id = 8;
+insert into pagamento(pagamento) values('Dinheiro');
+insert into pagamento(pagamento) values('Débito');
+insert into pagamento(pagamento) values('Crédito');
+insert into pagamento(pagamento) values('Pix');
+insert into pagamento(pagamento) values('Boleto');
+insert into pagamento(pagamento) values('');
 
 
--- TODAS AS TRANSAÇÕES MENORES DO QUE 50 REAIS
-
-select * from transacao where valor < 50
-
-select SUM(valor) as total from transacao where tipo = 'D'
-
-select data, valor, t.tipo, historico, p.descricao as 'plano_conta'
-from transacao as t inner join plano_contas p
-on p.id = t.id_plano_conta
-where t.tipo = 'D'
-order by valor
+-- exemplo insert na tabela  transacao
+insert into transacao(data, valor, tipo, historico,id_plano_conta, id_pagamento)
+values('2022-08-11 21:35:00', 100.47, 'D', 'Gasolina para Viagem', 3, 2);
