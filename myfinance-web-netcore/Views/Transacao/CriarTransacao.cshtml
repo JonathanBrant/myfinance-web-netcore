@@ -119,7 +119,7 @@
                         @{
                             foreach (var item in (List<PagamentoModel>)ViewBag.ListaPagamento)
                             {
-                                if (item.Id < 6)
+                                if (item.Id != 6)
                                 {
                                     if (item.Id.ToString() == vPagamento.ToString())
                                     {
@@ -144,10 +144,12 @@
     const inputReceita = document.querySelector('#input-receita');
     const inputeDespesa = document.querySelector('#input-despesa');
     const option = document.querySelector('#option');
+
     inputReceita.addEventListener("click", () => {
         pagamento.style.display = "none"
         option.setAttribute('value', "6");
     });
+    
     inputeDespesa.addEventListener("click", () => {
         pagamento.style.display = ""
     });
