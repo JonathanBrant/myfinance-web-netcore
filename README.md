@@ -37,7 +37,7 @@ Acesse o reposítório através do <a href="https://github.com/JonathanBrant/myf
 
 Clique em Code e copie o link.
 
-<img src="docs\telaGit.jpg" alt="telaGit">
+<img src="docs\telaGit.JPG" alt="telaGit">
 
 Em sua máquina, clique com botão direito nas pasta que deseja armazenar o projeto e clique em Git Bash Here.
 
@@ -49,7 +49,7 @@ Digite o comando "git clone + link copiado do projeto no github"
 
 Ao abrir a pasta com o projeto, abra um terminal e digite **cd myfinance-web-netcore**
 
-<img src="docs\terminal.jpg" alt="Terminalk">
+<img src="docs\terminal.jpg" alt="Terminal">
 
 Para compilar o projeto, execute o comando **dotnet build**
 
